@@ -1,3 +1,7 @@
+""" Modified from original to add more tasks 
+(remove sky and grid, change camera pose, etc.)
+"""
+
 # Copyright 2017 The dm_control Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -56,6 +60,25 @@ def hard(time_limit=_DEFAULT_TIME_LIMIT, random=None, environment_kwargs=None):
   return control.Environment(
       physics, task, time_limit=time_limit, **environment_kwargs)
 
+# New Task
+@SUITE.add('benchmarking')
+def hard_plain_sky_no_grid(time_limit=_DEFAULT_TIME_LIMIT, random=None, environment_kwargs=None):
+  """Returns reacher with sparse reward with 1e-2 tol and randomized target."""
+  physics = Physics.from_xml_string(common.read_model("reacher_plain_sky_no_grid.xml"), common.ASSETS)
+  task = Reacher(target_size=_SMALL_TARGET, random=random)
+  environment_kwargs = environment_kwargs or {}
+  return control.Environment(
+      physics, task, time_limit=time_limit, **environment_kwargs)
+
+# New Task
+@SUITE.add('benchmarking')
+def hard_tilt30(time_limit=_DEFAULT_TIME_LIMIT, random=None, environment_kwargs=None):
+  """Returns reacher with sparse reward with 1e-2 tol and randomized target."""
+  physics = Physics.from_xml_string(common.read_model("reacher_tilt30.xml"), common.ASSETS)
+  task = Reacher(target_size=_SMALL_TARGET, random=random)
+  environment_kwargs = environment_kwargs or {}
+  return control.Environment(
+      physics, task, time_limit=time_limit, **environment_kwargs)
 
 class Physics(mujoco.Physics):
   """Physics simulation with additional features for the Reacher domain."""
