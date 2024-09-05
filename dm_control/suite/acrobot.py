@@ -65,6 +65,22 @@ def swingup_plain_sky_no_grid(
     )
 
 
+# New Task
+@SUITE.add("benchmarking")
+def swingup_no_grid(
+    time_limit=_DEFAULT_TIME_LIMIT, random=None, environment_kwargs=None
+):
+    """Returns Acrobot balance task."""
+    physics = Physics.from_xml_string(
+        common.read_model("acrobot_no_grid.xml"), common.ASSETS
+    )
+    task = Balance(sparse=False, random=random)
+    environment_kwargs = environment_kwargs or {}
+    return control.Environment(
+        physics, task, time_limit=time_limit, **environment_kwargs
+    )
+
+
 @SUITE.add("benchmarking")
 def swingup_sparse(
     time_limit=_DEFAULT_TIME_LIMIT, random=None, environment_kwargs=None
